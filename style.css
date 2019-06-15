@@ -1,0 +1,42 @@
+body {
+    background-color: #E8F1F2;
+    font-family: 'Lato', sans-serif;
+}
+button {
+    cursor: pointer;
+    font-family: 'Lato', sans-serif;
+    display: inline-block;
+    padding: 15px 30px;
+    text-transform: uppercase;
+    color: black;
+    letter-spacing: 1px;
+    /*font-weight: 700;*/
+    margin: 10px;
+    position: relative;
+    border: 3px solid #fff;
+    background: #ffffff;
+    width: 140px;
+}
+table {
+    width: 100%;
+}
+td, tr, th {
+    border: 1px solid black;
+}
+.centerContent {
+    display: flex;
+    justify-content: center;
+}
+.col {
+    flex-direction: column;
+}
+.perfectCenter {
+    align-items: center;
+}
+.loginChoiceBox {
+    display: flex;
+    width: 50%;
+    border: 1px solid black;
+    border-radius: 15px;
+    box-sizing: border-box;
+}
