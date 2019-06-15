@@ -6,6 +6,7 @@ $sql = "SELECT * FROM Subject";
 $result = mysqli_query($conn, $sql);
 
 mysqli_close($conn);
+echo '<script>console.log("DB Connection Closed")</script>';
 
 ?>
 
@@ -35,26 +36,36 @@ mysqli_close($conn);
 
         <table>
             <tr>
-                <th>Subject ID</th>
-                <th>Subject Name</th>
-                <th>Subject Type</th>
+                <th><b>Subject ID</b></th>
+                <th><b>Subject Name</b></th>
+                <th><b>Subject Type</b></th>
             </tr>
 
             <?php
 
+            echo '<script>console.log("Fetching Data...")</script>';
             if (mysqli_num_rows($result) > 0) {
                 // output data of each row
                 while($row = mysqli_fetch_assoc($result)) {
+                    if ($row['subType'] == 'C'){
+                        $subType = 'Core';
+                    } else {
+                        $subType = 'Selective';
+                    }
                     echo "<tr><td>".$row['subID']."</td>"; // subjectID
                     echo "<td>".$row['subName']."</td>"; // subName
-                    echo "<td>".$row['subType']."</td></tr>"; // subType
+                    echo "<td>".$subType."</td></tr>"; // subType
                 }
             } else {
                 echo "There are no subjects to display!";
             }
+
             ?>
+
         </table>
 
+        <br>
+        <a href="javascript:history.back()"><button type="button">Back</button></a>
 
     </section>
 </section>

@@ -17,11 +17,17 @@ button {
     background: #ffffff;
     width: 140px;
 }
-table {
-    width: 100%;
-}
-td, tr, th {
+table, th, td {
     border: 1px solid black;
+    border-collapse: collapse;
+}
+table {
+    width: 90%;
+    margin: 10px;
+    text-align: center;
+}
+th, td {
+    width: 144px;
 }
 .centerContent {
     display: flex;
