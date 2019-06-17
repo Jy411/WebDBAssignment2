@@ -57,8 +57,8 @@ function modifySubject($subId, $subName, $subType) {
         $stmt -> execute() &&
         $stmt -> affected_rows === 1
     ) {
-        echo 'Updated';
+        echo "<p style='color: red'>Subject Modified!</p>";
     } else {
-        echo 'Not Updated';
+        echo "<p style='color: red'>Subject not Modified!</p>";
     }
 }

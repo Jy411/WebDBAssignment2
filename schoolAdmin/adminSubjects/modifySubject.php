@@ -5,10 +5,11 @@ include_once '../../includes.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Gets value of selected option of dropdown menu
-    $subId = $_POST['subjectList'];
+    $modSubId = $_POST['subjectList'];
     $newSubName = $_POST['subName'];
     $newSubType = $_POST['subType'];
 
+    echo $modSubId;
 }
 
 ?>
@@ -84,11 +85,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php
 
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                    $query = "UPDATE Subject SET subName=?, subType=? WHERE subID=? LIMIT 1";
-                    $stmt = $conn -> prepare($query);
-                    modifySubject($subId, $newSubName, $newSubType);
 
-                    echo "<p style='color: red'>Subject Modified!</p>";
+                    if ($subName){
+                        $query = "UPDATE Subject SET subName=?, subType=? WHERE subID=?";
+                        $stmt = $conn -> prepare($query);
+                        modifySubject($modSubId, $newSubName, $newSubType);
+                    } else {
+                        echo "<p style='color: red'>No subject name!</p>";
+                    }
+
                 }
 
 
