@@ -25,7 +25,7 @@
         <h4>Select A Class To Remove.</h4>
 
 
-        <a href="adminClasses.php"><button type="button">Back</button></a>
+        <a href="adminClasses.html"><button type="button">Back</button></a>
     </section>
 </section>
 

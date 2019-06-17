@@ -53,7 +53,7 @@
             </div>
         </form>
 
-        <a href="adminStudents.php"><button type="button">Back</button></a>
+        <a href="adminStudents.html"><button type="button">Back</button></a>
     </section>
 </section>
 

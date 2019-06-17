@@ -22,9 +22,9 @@
 <section class="centerContent">
     <section class="loginChoiceBox col centerContent perfectCenter">
         <h4>Select an option for more choices.</h4>
-        <a href="adminSubjects/adminSubjects.php"><button type="button">Subjects</button></a>
-        <a href="adminStudents/adminStudents.php"><button type="button">Students</button></a>
-        <a href="adminClasses/adminClasses.php"><button type="button">Classes</button></a>
+        <a href="adminSubjects/adminSubjects.html"><button type="button">Subjects</button></a>
+        <a href="adminStudents/adminStudents.html"><button type="button">Students</button></a>
+        <a href="adminClasses/adminClasses.html"><button type="button">Classes</button></a>
         <button type="button">Register Student to class</button>
 
         <a href="../index.html"><button type="button">Back</button></a>

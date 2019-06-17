@@ -1,3 +1,17 @@
+<?php
+
+include_once '../../database.inc.php';
+include_once '../../includes.php';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Gets value of selected option of dropdown menu
+    $subId = $_POST['subjectList'];
+    $newSubName = $_POST['subName'];
+    $newSubType = $_POST['subType'];
+
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +20,14 @@
     <!-- Font -->
     <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
     <link href="../../style.css" rel="stylesheet">
+
+    <script>
+        function handleSubjectChange() {
+            let subjectValue = document.getElementById('subjectList');
+            subjectValue = subjectValue.options[subjectValue.selectedIndex].value;
+            console.log('Selected SubjectID: ' + subjectValue);
+        }
+    </script>
 
 </head>
 <body>
@@ -24,7 +46,62 @@
     <section class="loginChoiceBox col centerContent perfectCenter">
         <h4>Select A Subject To Modify.</h4>
 
-        <a href="adminSubjects.php"><button type="button">Back</button></a>
+        <form action="modifySubject.php" method="post">
+
+            <div class="centerContent perfectCenter">
+                <label for="subjectList">Subject:&nbsp</label>
+                <select id="subjectList" name="subjectList" onchange="handleSubjectChange()">
+                    <?php
+
+                    $result = getAllSubjects($conn);
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            $subId = $row['subID'];
+                            $subName = $row['subName'];
+                            echo "<option value='$subId'>$subName</option>";
+                        }
+                    }
+
+                    ?>
+                </select>
+            </div>
+
+            <div class="centerContent perfectCenter">
+                <label for="subjectName">Subject Name:&nbsp</label>
+                <input type="text" id="subjectName" name="subName" placeholder="Enter Subject Name">
+            </div>
+
+            <div class="centerContent perfectCenter">
+                <label for="subjectType">Subject Type:&nbsp</label>
+                <select id="subjectType" name="subType">
+                    <option>== Select A Value ==</option>
+                    <option value="C">Core</option>
+                    <option value="S">Selective</option>
+                </select>
+            </div>
+
+            <div class="centerContent perfectCenter">
+                <?php
+
+                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                    $query = "UPDATE Subject SET subName=?, subType=? WHERE subID=? LIMIT 1";
+                    $stmt = $conn -> prepare($query);
+                    modifySubject($subId, $newSubName, $newSubType);
+
+                    echo "<p style='color: red'>Subject Modified!</p>";
+                }
+
+
+                ?>
+            </div>
+
+            <div class="centerContent perfectCenter">
+                <button type="submit">Modify Subject</button>
+            </div>
+
+        </form>
+
+        <a href="adminSubjects.html"><button type="button">Back</button></a>
 
     </section>
 </section>

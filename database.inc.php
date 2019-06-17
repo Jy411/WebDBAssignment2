@@ -5,11 +5,12 @@ $user = "root";
 $password = "root";
 $myDB = "classDB";
 
-$conn = mysqli_connect($server, $user, $password, $myDB);
+global $conn;
+$conn = new mysqli($server, $user, $password, $myDB);
 
 // Check connection
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
 
 echo '<script>console.log("Successfully Connected to DB")</script>';

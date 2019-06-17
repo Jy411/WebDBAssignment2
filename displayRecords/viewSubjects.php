@@ -1,12 +1,7 @@
 <?php
 
 include_once '../database.inc.php'; // to connect to DB
-
-$sql = "SELECT * FROM Subject";
-$result = mysqli_query($conn, $sql);
-
-mysqli_close($conn);
-echo '<script>console.log("DB Connection Closed")</script>';
+include_once '../includes.php'; // the functions are located here
 
 ?>
 
@@ -43,10 +38,11 @@ echo '<script>console.log("DB Connection Closed")</script>';
 
             <?php
 
-            echo '<script>console.log("Fetching Data...")</script>';
-            if (mysqli_num_rows($result) > 0) {
+            $result = getAllSubjects($conn);
+
+            if ($result->num_rows > 0) {
                 // output data of each row
-                while($row = mysqli_fetch_assoc($result)) {
+                while($row = $result->fetch_assoc()) {
                     if ($row['subType'] == 'C'){
                         $subType = 'Core';
                     } else {

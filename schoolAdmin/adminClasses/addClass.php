@@ -96,7 +96,7 @@
             </div>
         </form>
 
-        <a href="adminClasses.php"><button type="button">Back</button></a>
+        <a href="adminClasses.html"><button type="button">Back</button></a>
     </section>
 </section>
 

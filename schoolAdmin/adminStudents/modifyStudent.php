@@ -24,7 +24,7 @@
     <section class="loginChoiceBox col centerContent perfectCenter">
         <h4>Select A Student To Modify.</h4>
 
-        <a href="adminStudents.php"><button type="button">Back</button></a>
+        <a href="adminStudents.html"><button type="button">Back</button></a>
     </section>
 </section>
 
