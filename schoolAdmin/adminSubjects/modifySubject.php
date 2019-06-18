@@ -3,13 +3,17 @@
 include_once '../../database.inc.php';
 include_once '../../includes.php';
 
+$db = new Db();
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Gets value of selected option of dropdown menu
     $modSubId = $_POST['subjectList'];
     $newSubName = $_POST['subName'];
     $newSubType = $_POST['subType'];
 
-    echo $modSubId;
+    // Query DB to check if there are duplicate subject names
+    $checkResult = $db -> select("SELECT * FROM Subject WHERE subName='$newSubName'");
+
 }
 
 ?>
@@ -39,43 +43,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <br>
 <section class="centerContent">
     <section class="loginChoiceBox centerContent perfectCenter">
-        <h3>Admin - Modify Subject</h3>
+        <h2>Admin - Modify Subject</h2>
     </section>
 </section>
 <br>
 <section class="centerContent">
     <section class="loginChoiceBox col centerContent perfectCenter">
-        <h4>Select A Subject To Modify.</h4>
+        <h3>Select A Subject To Modify.</h3>
 
         <form action="modifySubject.php" method="post">
 
             <div class="centerContent perfectCenter">
                 <label for="subjectList">Subject:&nbsp</label>
-                <select id="subjectList" name="subjectList" onchange="handleSubjectChange()">
+                <select id="subjectList" name="subjectList" onchange="handleSubjectChange()" required>
                     <?php
+                    /**
+                     * Populate the dropdown options with records from Subject
+                     */
+                    $rows = $db -> select("SELECT * FROM Subject");
 
-                    $result = getAllSubjects($conn);
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                            $subId = $row['subID'];
-                            $subName = $row['subName'];
-                            echo "<option value='$subId'>$subName</option>";
-                        }
+                    // For each record in the array
+                    foreach ($rows as $key => $value) {
+                        $subId = $value['subID'];
+                        $subName = $value['subName'];
+                        echo "<option value='$subId'>$subName</option>";
                     }
-
                     ?>
                 </select>
             </div>
 
             <div class="centerContent perfectCenter">
                 <label for="subjectName">Subject Name:&nbsp</label>
-                <input type="text" id="subjectName" name="subName" placeholder="Enter Subject Name">
+                <input type="text" id="subjectName" name="subName" placeholder="Enter Subject Name" required>
             </div>
 
             <div class="centerContent perfectCenter">
                 <label for="subjectType">Subject Type:&nbsp</label>
-                <select id="subjectType" name="subType">
-                    <option>== Select A Value ==</option>
+                <select id="subjectType" name="subType" required>
                     <option value="C">Core</option>
                     <option value="S">Selective</option>
                 </select>
@@ -85,16 +89,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php
 
                 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-                    if ($subName){
-                        $query = "UPDATE Subject SET subName=?, subType=? WHERE subID=?";
-                        $stmt = $conn -> prepare($query);
-                        modifySubject($modSubId, $newSubName, $newSubType);
+                    if (count($checkResult) > 0) {
+                        // there is a duplicate
+                        echo '<script>console.log("Already exists")</script>';
+                        echo "<p style='color: red'>Error modifying Subject ID: $modSubId Subject Name: $newSubName!<br>ID or Name already exists!</p>";
                     } else {
-                        echo "<p style='color: red'>No subject name!</p>";
+                        // no duplicate
+                        $query = "UPDATE Subject SET subName=?, subType=? WHERE subID=?";
+                        $db -> preparedModifySubject($query, $modSubId, $newSubName, $newSubType);
                     }
-
                 }
+
 
 
                 ?>

@@ -3,11 +3,14 @@
 include_once '../../database.inc.php';
 include_once '../../includes.php';
 
+$db = new Db();
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Gets value of selected option of dropdown menu
     $removeSubId = $_POST['subjectList'];
 
-    deleteSubject($conn, $removeSubId);
+    $query = "DELETE FROM Subject WHERE subID=$removeSubId";
+    $db ->query($query);
 }
 
 ?>
@@ -38,13 +41,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <br>
 <section class="centerContent">
     <section class="loginChoiceBox centerContent perfectCenter">
-        <h3>Admin - Remove Subject</h3>
+        <h2>Admin - Remove Subject</h2>
     </section>
 </section>
 <br>
 <section class="centerContent">
     <section class="loginChoiceBox col centerContent perfectCenter">
-        <h4>Select A Subject To Remove.</h4>
+        <h3>Select A Subject To Remove.</h3>
 
         <form action="removeSubject.php" method="post">
 
@@ -53,13 +56,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <select id="subjectList" name="subjectList" onchange="handleSubjectChange()">
                     <?php
 
-                    $result = getAllSubjects($conn);
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                            $subId = $row['subID'];
-                            $subName = $row['subName'];
-                            echo "<option value='$subId'>$subName</option>";
-                        }
+                    $rows = $db -> select("SELECT * FROM Subject");
+
+                    // For each record in the array
+                    foreach ($rows as $key => $value) {
+                        $subId = $value['subID'];
+                        $subName = $value['subName'];
+                        echo "<option value='$subId'>$subName</option>";
                     }
 
                     ?>

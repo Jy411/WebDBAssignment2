@@ -12,7 +12,8 @@ function getAllSubjects(mysqli $dbConn) {
     return $result;
 }
 
-/* Gets all SubjectID and Subject Names
+/**
+ * Gets all SubjectID and Subject Names
  * @returns object containing all records
  * */
 function checkForDuplicate(mysqli $dbConn, $subName) {

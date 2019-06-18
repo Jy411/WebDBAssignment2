@@ -1,11 +1,9 @@
 <?php
 
 include_once '../database.inc.php'; // to connect to DB
-include_once '../includes.php'; // the functions are located here
 
 // Create instance of DB class
 $db = new Db();
-
 
 ?>
 
@@ -13,7 +11,7 @@ $db = new Db();
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Subjects</title>
+    <title>Students</title>
     <!-- Font -->
     <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
     <link href="../style.css" rel="stylesheet">
@@ -26,7 +24,7 @@ $db = new Db();
 <br>
 <section class="centerContent">
     <section class="loginChoiceBox centerContent perfectCenter">
-        <h2>Viewing All Subjects</h2>
+        <h2>Viewing All Students</h2>
     </section>
 </section>
 <br>
@@ -34,25 +32,27 @@ $db = new Db();
     <section class="loginChoiceBox col centerContent perfectCenter">
         <table>
             <tr>
-                <th><b>Subject ID</b></th>
-                <th><b>Subject Name</b></th>
-                <th><b>Subject Type</b></th>
+                <th><b>Student ID</b></th>
+                <th><b>Student First Name</b></th>
+                <th><b>Student Last Name</b></th>
+                <th><b>Student Gender</b></th>
             </tr>
 
             <?php
 
-            $rows = $db -> select("SELECT * FROM Subject");
+            $rows = $db -> select("SELECT * FROM Student");
 
             // For each record in the array
             foreach ($rows as $key => $value) {
-                if ($value['subType'] == 'C'){
-                    $subType = 'Core';
+                if ($value['stuGender'] == 'M'){
+                    $stuGender = 'Male';
                 } else {
-                    $subType = 'Selective';
+                    $stuGender = 'Female';
                 }
-                echo "<tr><td>".$value['subID']."</td>"; // subjectID
-                echo "<td>".$value['subName']."</td>"; // subName
-                echo "<td>".$subType."</td></tr>"; // subType
+                echo "<tr><td>".$value['stuID']."</td>"; // Student ID
+                echo "<td>".$value['stuFName']."</td>"; // Student FName
+                echo "<td>".$value['stuLName']."</td>"; // Student LName
+                echo "<td>".$stuGender."</td></tr>"; // Student Gender
             }
 
             ?>

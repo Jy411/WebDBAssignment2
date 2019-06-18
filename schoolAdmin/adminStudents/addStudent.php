@@ -1,3 +1,35 @@
+<?php
+
+include_once '../../database.inc.php';
+
+// Create instance of DB
+$db = new Db();
+
+// On form submit
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    echo '<script>console.log("Successfully retrieved POST values")</script>';
+
+    /*
+     * Retrieve values from POST upon clicking submit
+     * */
+    $stuID = $_POST['stuID'];
+    // Sanitize user input
+    $stuFName = str_replace(array('\'', '"'), '', $_POST['stuFName']);
+    $stuLName = str_replace(array('\'', '"'), '', $_POST['stuLName']);
+    $stuGender = $_POST['stuGender'];
+
+    echo 'ID: '.$stuID;
+    echo '<br>';
+    echo 'FName: '.$stuFName;
+    echo '<br>';
+    echo 'LName: '.$stuLName;
+    echo '<br>';
+    echo 'Gender: '.$stuGender;
+
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,36 +48,47 @@
 <br>
 <section class="centerContent">
     <section class="loginChoiceBox centerContent perfectCenter">
-        <h3>Admin - Add Student</h3>
+        <h2>Admin - Add Student</h2>
     </section>
 </section>
 <br>
 <section class="centerContent">
     <section class="loginChoiceBox col centerContent perfectCenter">
-        <h4>Input Student Details</h4>
+        <h3>Input Student Details</h3>
 
-        <form>
+        <form action="addStudent.php" method="post">
             <div class="centerContent perfectCenter">
-                <label for="subjectId">Student ID:&nbsp</label>
-                <input type="number" id="studentId" placeholder="Enter Student ID">
+                <label for="studentId">Student ID:&nbsp</label>
+                <input type="number" id="studentId" name="stuID" placeholder="Enter Student ID" required>
             </div>
 
             <div class="centerContent perfectCenter">
-                <label for="subjectName">Student Name:&nbsp</label>
-                <input type="text" id="studentFName" placeholder="Enter Student Name">
+                <label for="studentFName">Student Name:&nbsp</label>
+                <input type="text" id="studentFName" name="stuFName" placeholder="Enter Student Name" required>
             </div>
 
             <div class="centerContent perfectCenter">
-                <label for="subjectName">Student Last Name:&nbsp</label>
-                <input type="text" id="studentLName" placeholder="Enter Student Last Name">
+                <label for="studentLName">Student Last Name:&nbsp</label>
+                <input type="text" id="studentLName" name="stuLName" placeholder="Enter Student Last Name" required>
             </div>
 
             <div class="centerContent perfectCenter">
-                <label for="subjectType">Student Gender:&nbsp</label>
-                <select id="studentGender">
+                <label for="studentGender">Student Gender:&nbsp</label>
+                <select id="studentGender" name="stuGender" required>
                     <option value="M">Male</option>
                     <option value="F">Female</option>
                 </select>
+            </div>
+
+            <div class="centerContent perfectCenter">
+                <?php
+
+                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                    // Student inserted here
+                    $db->preparedInsertStudent("INSERT INTO Student VALUES (?,?,?,?)", $stuID, $stuFName, $stuLName, $stuGender);
+                }
+
+                ?>
             </div>
 
             <div class="centerContent perfectCenter">
@@ -57,12 +100,6 @@
     </section>
 </section>
 
-<?php
-
-
-
-
-?>
 
 </body>
 </html>
