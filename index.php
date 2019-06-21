@@ -1,3 +1,9 @@
+<?php
+
+include_once 'database.inc.php';
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

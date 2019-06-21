@@ -1,11 +1,15 @@
 <?php
 
 include_once '../database.inc.php'; // to connect to DB
-include_once '../includes.php'; // the functions are located here
 
 // Create instance of DB class
 $db = new Db();
 
+echo $_SESSION['loggedInAs'];
+// if logged in as teacher
+if ($_SESSION['loggedInAs'] === 1) {
+
+}
 
 ?>
 
@@ -59,7 +63,10 @@ $db = new Db();
 
         </table>
         <br>
-        <a href="javascript:history.back()"><button type="button">Back</button></a>
+        <a href="<?php if($_SESSION['loggedInAs'] === 1){ echo '../schoolTeacher/teacherSubjects/teacherSubjects.php'; } else { echo '../schoolAdmin/adminSubjects/adminSubjects.html'; } ?>">
+            <button type="button">Back</button>
+        </a>
+
     </section>
 </section>
 

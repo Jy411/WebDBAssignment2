@@ -5,6 +5,8 @@ include_once '../database.inc.php'; // to connect to DB
 // Create instance of DB class
 $db = new Db();
 
+echo $_SESSION['loggedInAs'];
+
 ?>
 
 <!DOCTYPE html>
@@ -30,6 +32,7 @@ $db = new Db();
 <br>
 <section class="centerContent">
     <section class="loginChoiceBox col centerContent perfectCenter">
+        <h2>Click on Student ID to View Student Scores</h2>
         <table>
             <tr>
                 <th><b>Student ID</b></th>
@@ -44,12 +47,13 @@ $db = new Db();
 
             // For each record in the array
             foreach ($rows as $key => $value) {
+                $studentID = $value['stuID'];
                 if ($value['stuGender'] == 'M'){
                     $stuGender = 'Male';
                 } else {
                     $stuGender = 'Female';
                 }
-                echo "<tr><td>".$value['stuID']."</td>"; // Student ID
+                echo "<tr><td><a href='studentReport.php?stuID=".$studentID."'>".$studentID."</a></td>";
                 echo "<td>".$value['stuFName']."</td>"; // Student FName
                 echo "<td>".$value['stuLName']."</td>"; // Student LName
                 echo "<td>".$stuGender."</td></tr>"; // Student Gender
@@ -59,7 +63,9 @@ $db = new Db();
 
         </table>
         <br>
-        <a href="javascript:history.back()"><button type="button">Back</button></a>
+        <a href="<?php if($_SESSION['loggedInAs'] === 1){ echo '../schoolTeacher/teacherStudents/teacherStudents.php'; } else { echo '../schoolAdmin/adminStudents/adminStudents.html'; } ?>">
+            <button type="button">Back</button>
+        </a>
     </section>
 </section>
 

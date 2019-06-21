@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 class Db {
     /*
      * Connection to DB is static so that
@@ -65,6 +67,87 @@ class Db {
         }
 
         return $rows;
+    }
+
+    public function preparedInsertStudentReport($query, $stuID, $subID, $subScore) {
+        global $stmt;
+        $connection = $this -> connect();
+        $stmt = $connection -> prepare($query);
+
+        if (
+            $stmt &&
+            // Bind params to placeholder values
+            $stmt -> bind_param('iii', $stuID, $subID, $subScore) &&
+            $stmt -> execute()
+        ) {
+            // insert success
+            echo '<script>console.log("Exam Score Added.")</script>';
+//            echo "<p style='color: red'>Score added</p>";
+        }  else {
+            echo '<script>console.log("Unsuccessful insert")</script>';
+            echo "<p style='color: red'>Error on adding score.</p>";
+        }
+    }
+
+    public function preparedInsertStudentClass($query, $stuID, $classID) {
+        global $stmt;
+        $connection = $this -> connect();
+        $stmt = $connection -> prepare($query);
+
+        if (
+            $stmt &&
+            // Bind params to placeholder values
+            $stmt -> bind_param('ii', $stuID, $classID) &&
+            $stmt -> execute()
+        ) {
+            // insert success
+            echo '<script>console.log("Student successfully registered.")</script>';
+            echo "<p style='color: red'>Student $stuID registered to $classID!</p>";
+        }  else {
+            echo '<script>console.log("Unsuccessful insert")</script>';
+            echo "<p style='color: red'>Error on registering student.</p>";
+        }
+    }
+
+    public function preparedInsertClass($query, $classID, $className, $classYear, $classGrade) {
+        global $stmt;
+        $connection = $this -> connect();
+        $stmt = $connection -> prepare($query);
+
+        if (
+            $stmt &&
+            // Bind params to placeholder values
+            $stmt -> bind_param('isss', $classID, $className, $classYear, $classGrade) &&
+            $stmt -> execute()
+        ) {
+            // insert success
+            echo '<script>console.log("New class successfully inserted.")</script>';
+            echo "<p style='color: red'>ID: $classID Name: $className successfully inserted!</p>";
+        }  else {
+            echo '<script>console.log("Unsuccessful insert")</script>';
+            echo "<p style='color: red'>Insertion Error! ID or Name is not unique.</p>";
+        }
+    }
+
+    public function preparedModifyClass($query, $classID, $className, $classYear, $classGrade) {
+        global $stmt;
+        // Connects to DB first
+        $connection = $this -> connect();
+
+        // Prepares the query
+        $stmt = $connection -> prepare($query);
+
+        if ($stmt &&
+            $stmt -> bind_param('sssi', $className, $classYear, $classGrade, $classID) &&
+            $stmt -> execute() &&
+            $stmt -> affected_rows === 1
+        ) {
+            echo '<script>console.log("Successfully Modified Class!")</script>';
+            echo "<p style='color: red'>Class Modified!</p>";
+        } else {
+            echo '<script>console.log("Failed to modify class :(")</script>';
+            echo "<p style='color: red'>Class not Modified!</p>";
+        }
     }
 
     public function preparedInsertStudent($query, $stuID, $stuFName, $stuLName, $stuGender) {

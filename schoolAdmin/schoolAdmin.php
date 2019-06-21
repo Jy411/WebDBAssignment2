@@ -1,3 +1,12 @@
+<?php
+
+include_once '../database.inc.php'; // to connect to DB
+
+$db = new Db();
+
+$_SESSION['loggedInAs'] = 2;
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,9 +34,10 @@
         <a href="adminSubjects/adminSubjects.html"><button type="button">Subjects</button></a>
         <a href="adminStudents/adminStudents.html"><button type="button">Students</button></a>
         <a href="adminClasses/adminClasses.html"><button type="button">Classes</button></a>
-        <button type="button">Register Student to class</button>
+        <a href="registerStudent.php"><button type="button">Register Student to class</button></a>
+        <a href="../displayRecords/studentClass.php"><button type="button">Student Class Ledger</button></a>
 
-        <a href="../index.html"><button type="button">Back</button></a>
+        <a href="../index.php"><button type="button">Back</button></a>
 
     </section>
 </section>

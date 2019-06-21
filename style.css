@@ -28,6 +28,7 @@ table {
 }
 th, td {
     width: 144px;
+    background-color: white;
 }
 .centerContent {
     display: flex;
