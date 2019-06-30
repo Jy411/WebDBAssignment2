@@ -5,11 +5,11 @@ include_once '../database.inc.php'; // to connect to DB
 // Create instance of DB class
 $db = new Db();
 
-echo $_SESSION['loggedInAs'];
+//echo $_SESSION['loggedInAs'];
 // if logged in as teacher
-if ($_SESSION['loggedInAs'] === 1) {
-
-}
+//if ($_SESSION['loggedInAs'] === 1) {
+//
+//}
 
 ?>
 
@@ -63,7 +63,7 @@ if ($_SESSION['loggedInAs'] === 1) {
 
         </table>
         <br>
-        <a href="<?php if($_SESSION['loggedInAs'] === 1){ echo '../schoolTeacher/teacherSubjects/teacherSubjects.php'; } else { echo '../schoolAdmin/adminSubjects/adminSubjects.html'; } ?>">
+        <a href="<?php if($_SESSION['loggedInAs'] === 1){ echo '../schoolTeacher/schoolTeacher.php'; } else { echo '../schoolAdmin/adminSubjects/adminSubjects.html'; } ?>">
             <button type="button">Back</button>
         </a>
 

@@ -32,9 +32,9 @@ $_SESSION['loggedInAs'] = 1;
 <section class="centerContent">
     <section class="loginChoiceBox col centerContent perfectCenter">
         <h4>Select an option for more choices.</h4>
-        <a href="teacherSubjects/teacherSubjects.php"><button type="button">Subjects</button></a>
+        <a href="../displayRecords/viewSubjects.php"><button type="button">View All Subjects</button></a>
         <a href="teacherStudents/teacherStudents.php"><button type="button">Students</button></a>
-        <a href="teacherClasses/teacherClasses.php"><button type="button">Classes</button></a>
+        <a href="../displayRecords/viewClasses.php"><button type="button">View All Classes</button></a>
 
         <a href="../index.php"><button type="button">Back</button></a>
 

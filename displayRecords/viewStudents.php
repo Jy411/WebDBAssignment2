@@ -5,7 +5,7 @@ include_once '../database.inc.php'; // to connect to DB
 // Create instance of DB class
 $db = new Db();
 
-echo $_SESSION['loggedInAs'];
+//echo $_SESSION['loggedInAs'];
 
 ?>
 

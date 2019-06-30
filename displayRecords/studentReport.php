@@ -9,13 +9,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $stuID = $_GET['stuID'];
     $_SESSION['stuID'] = $_GET['stuID'];
 
-    $query = "SELECT stuFName, stuLName, StudentReport.subID, subName, subScore FROM StudentReport
+    $query = "SELECT stuFName, stuLName, S.stuID, StudentReport.subID, subName, subScore FROM StudentReport
                 INNER JOIN Student S on StudentReport.stuID = S.stuID
                 INNER JOIN Subject S2 on StudentReport.subID = S2.subID WHERE S.stuID=$stuID";
 
     $rows = $db->query($query);
     foreach ($rows as $key => $value) {
-        $studentName = $value['stuFName']." ".$value['stuLName'];
+        $studentName = $value['stuID']." ".$value['stuFName']." ".$value['stuLName'];
     }
 }
 
@@ -129,6 +129,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
                 <a href="../addScoreToStudent.php?stuID=<?php echo $stuID ?>"><button type="submit">Add Exam Score</button></a>
             </div>
         </form>
+
+        <table>
+            <tr>
+                <th><b>Total Score</b></th>
+                <th><b>Final Grade</b></th>
+            </tr>
+
+            <?php
+
+            $query = "select round(sum(subScore)/count(subScore)) as TotalScore from StudentReport where stuID=$stuID";
+            $rows = $db->query($query);
+            foreach ($rows as $key => $value) {
+                $totalScore = $value['TotalScore'];
+                if ($totalScore >= 90) {
+                    $finalGrade = 'A';
+                } elseif ($totalScore >= 80 && $totalScore <= 89) {
+                    $finalGrade = 'B';
+                } elseif ($totalScore >= 70 && $totalScore <= 79) {
+                    $finalGrade = 'C';
+                } elseif ($totalScore >= 60 && $totalScore <= 69) {
+                    $finalGrade = 'D';
+                } elseif ($totalScore < 60) {
+                    $finalGrade = 'F';
+                }
+                echo "<tr><td>$totalScore</td>";
+                echo "<td>$finalGrade</td></tr>";
+            }
+
+            ?>
+
+        </table>
+
 
         <a href="<?php if($_SESSION['loggedInAs'] === 1){ echo '../schoolTeacher/schoolTeacher.php'; } else { echo '../schoolAdmin/schoolAdmin.php'; } ?>">
             <button type="button">Back</button>

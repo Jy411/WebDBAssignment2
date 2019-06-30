@@ -22,15 +22,11 @@ include_once 'database.inc.php';
 </section>
 <br>
 <section class="centerContent">
-
     <section class="loginChoiceBox col centerContent perfectCenter">
         <h1>Login as:</h1>
         <a href="schoolTeacher/schoolTeacher.php"><button type="button">Teacher</button></a>
         <a href="schoolAdmin/schoolAdmin.php"><button type="button">Admin</button></a>
     </section>
-
-
 </section>
-
 </body>
 </html>

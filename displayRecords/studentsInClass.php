@@ -35,6 +35,8 @@ $db = new Db();
                 <th><b>Student ID</b></th>
                 <th><b>Student</b></th>
                 <th><b>Class</b></th>
+                <th><b>Total Score</b></th>
+                <th><b>Final Grade</b></th>
             </tr>
 
             <?php
@@ -50,13 +52,29 @@ $db = new Db();
                 // For each record in the array
                 foreach ($rows as $key => $value) {
                     $studentID = $value['stuID'];
+                    $query = "select round(sum(subScore)/count(subScore)) as TotalScore from StudentReport where stuID=$studentID";
+                    $rows = $db->query($query);
+                    foreach ($rows as $key1 => $value1) {
+                        $totalScore = $value1['TotalScore'];
+                        if ($totalScore >= 90) {
+                            $finalGrade = 'A';
+                        } elseif ($totalScore >= 80 && $totalScore <= 89) {
+                            $finalGrade = 'B';
+                        } elseif ($totalScore >= 70 && $totalScore <= 79) {
+                            $finalGrade = 'C';
+                        } elseif ($totalScore >= 60 && $totalScore <= 69) {
+                            $finalGrade = 'D';
+                        } elseif ($totalScore < 60) {
+                            $finalGrade = 'F';
+                        }
+                    }
                     $studentName = $value['stuFName']." ".$value['stuLName'];
                     echo "<tr><td><a href='studentReport.php?stuID=".$studentID."'>".$studentID."</a></td>";
                     echo "<td>".$studentName."</td>";
-                    echo "<td>".$classID."</td></tr>";
+                    echo "<td>".$classID."</td>";
+                    echo "<td>$totalScore</td>";
+                    echo "<td>$finalGrade</td></tr>";
                 }
-
-
             }
 
             ?>
